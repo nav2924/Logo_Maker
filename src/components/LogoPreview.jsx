@@ -8,7 +8,7 @@ function LogoPreview({ downloadIcon }) {
   const { updateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
-    const storageData = JSON.parse(localStorage.getItem("value"));
+    const storageData = JSON.parse(localStorage.getItem("value")) || {};
     setStorageValue(storageData);
   }, [updateStorage]);
 
@@ -52,17 +52,17 @@ function LogoPreview({ downloadIcon }) {
         className="h-[500px] w-[500px] outline-dotted bg-placeholder"
         id="downloadLogoDiv"
         style={{
-          padding: `${storageValue?.bgPadding}px`,
-          borderRadius: `${storageValue?.bgRounded}px`,
-          backgroundColor: storageValue?.bgColor,
+          padding: `${storageValue.bgPadding || 0}px`,
+          borderRadius: `${storageValue.bgRounded || 0}px`,
+          backgroundColor: storageValue.bgColor || "transparent",
         }}
       >
         <div className="h-full w-full flex items-center justify-center">
           <Icon
-            name={storageValue?.icon}
-            color={storageValue?.iconsColor}
-            size={storageValue?.iconSize}
-            rotate={storageValue?.iconsRotate}
+            name={storageValue.icon || ""}
+            color={storageValue.iconsColor || "#000"}
+            size={storageValue.iconSize || 24}
+            rotate={storageValue.iconsRotate || 0}
           />
         </div>
       </div>

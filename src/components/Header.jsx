@@ -7,11 +7,14 @@ import { Download } from "lucide-react";
 function Header({ DownloadIcon }) {
   return (
     <div className="p-4 shadow-sm border flex justify-between items-center">
-      <img src="/vite.svg" alt="" />
+      <img src="/vite.svg" alt="Vite Logo" />
       <div className="flex space-x-4 items-center">
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <Button className="flex gap-2 items-center">
-            <Download className="h-4 w-4" onClick={() => DownloadIcon(Date.now())} />
+          <Button
+            className="flex gap-2 items-center"
+            onClick={() => DownloadIcon(Date.now())}
+          >
+            <Download className="h-4 w-4" />
             Download
           </Button>
           <ModeToggle />
