@@ -5,6 +5,7 @@ import IconController from "./components/IconController";
 import BackgroundController from "./components/BackgroundController";
 import LogoPreview from "./components/LogoPreview";
 import { UpdateStorageContext } from "./context/UpdateStorageContext";
+import Footer from "./components/Footer";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -25,6 +26,7 @@ function App() {
             <LogoPreview downloadIcon={downloadIcon} />
           </div>
         </div>
+        
       </>
     </UpdateStorageContext.Provider>
   );
