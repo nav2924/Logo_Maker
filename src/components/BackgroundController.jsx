@@ -48,7 +48,7 @@ function BackgroundController() {
         <Slider
           step={1}
           max={512}
-          defaultValue={[0]}
+          defaultValue={[padding]}
           onValueChange={(event) => setPadding(event[0])}
         />
       </div>
