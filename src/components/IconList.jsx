@@ -7,12 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Smile } from "lucide-react";
 import { iconList } from "@/constants/icons";
 import { icons } from "lucide-react";
 
 function IconList({ selectedIcon }) {
+  const storageValue = JSON.parse(localStorage.getItem("value"));
   const [openDialog, setDialog] = useState(false);
+  const [icon, setIcon] = useState(
+    storageValue?.icon !== undefined ? storageValue.icon : "Smile"
+  );
 
   const Icon = ({ name, color, size, rotate }) => {
     const LucidIcon = icons[name];
@@ -35,7 +38,7 @@ function IconList({ selectedIcon }) {
         onClick={() => setDialog(true)}
         className="p-3 cursor-pointer bg-primary-text rounded-md w-[50px] h-[50px] flex items-center my-2 justify-center"
       >
-        <Smile />
+        <Icon name={icon} color={"#C94F10"} size={20} />
       </div>
       <Dialog open={openDialog} onOpenChange={(open) => setDialog(open)}>
         <DialogContent>
@@ -50,6 +53,7 @@ function IconList({ selectedIcon }) {
                     onClick={() => {
                       selectedIcon(icon);
                       setDialog(false);
+                      setIcon(icon);
                     }}
                   >
                     <Icon name={icon} color={"#C94F10"} size={20} />

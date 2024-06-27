@@ -1,23 +1,37 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UpdateStorageContext } from "../context/UpdateStorageContext";
 import { icons } from "lucide-react";
+import html2canvas from "html2canvas";
 
 function LogoPreview({ downloadIcon }) {
   const [storageValue, setStorageValue] = useState({});
-  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
+  const { updateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
     const storageData = JSON.parse(localStorage.getItem("value"));
-    // console.log(storageData);
     setStorageValue(storageData);
   }, [updateStorage]);
 
   useEffect(() => {
     if (downloadIcon) {
-      console.log("Download Icon clicked");
+      downloadPngLogo();
     }
   }, [downloadIcon]);
-  
+
+  const downloadPngLogo = () => {
+    const downloadLogoDiv = document.getElementById("downloadLogoDiv");
+
+    html2canvas(downloadLogoDiv, {
+      backgroundColor: null,
+    }).then((canvas) => {
+      const pngImage = canvas.toDataURL("image/png");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngImage;
+      downloadLink.download = "logo.png";
+      downloadLink.click();
+    });
+  };
+
   const Icon = ({ name, color, size, rotate }) => {
     const LucidIcon = icons[name];
     if (!LucidIcon) {
@@ -36,15 +50,14 @@ function LogoPreview({ downloadIcon }) {
     <div className="flex items-center justify-center h-screen">
       <div
         className="h-[500px] w-[500px] outline-dotted bg-placeholder"
-        style={{ padding: `${storageValue?.bgPadding}px` }}
+        id="downloadLogoDiv"
+        style={{
+          padding: `${storageValue?.bgPadding}px`,
+          borderRadius: `${storageValue?.bgRounded}px`,
+          backgroundColor: storageValue?.bgColor,
+        }}
       >
-        <div
-          className="h-full w-full flex items-center justify-center"
-          style={{
-            borderRadius: `${storageValue?.bgRounded}px`,
-            background: storageValue?.bgColor,
-          }}
-        >
+        <div className="h-full w-full flex items-center justify-center">
           <Icon
             name={storageValue?.icon}
             color={storageValue?.iconsColor}
