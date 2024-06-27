@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Slider } from "./ui/slider";
 import ColorPickerController from "./ColorPickerController";
+import { UpdateStorageContext } from "@/context/UpdateStorageContext";
 
 function BackgroundController() {
-  const [rounded, setRounded] = useState(0);
-  const [padding, setPadding] = useState(0);
-  const [color, setColor] = useState("#000");
   const storageValue = JSON.parse(localStorage.getItem("value"));
+
+  const [rounded, setRounded] = useState(
+    storageValue ? storageValue?.bgRounded : 0
+  );
+  const [padding, setPadding] = useState(
+    storageValue ? storageValue?.bgPadding : 0
+  );
+  const [color, setColor] = useState(
+    storageValue ? storageValue?.bgColor : "#fff"
+  );
+  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
     const updateValue = {
@@ -15,8 +24,9 @@ function BackgroundController() {
       bgPadding: padding,
       bgColor: color,
     };
+    setUpdateStorage(updateValue);
     localStorage.setItem("value", JSON.stringify(updateValue));
-  });
+  }, [rounded, padding, color, setUpdateStorage, storageValue]);
 
   return (
     <div>
@@ -44,7 +54,7 @@ function BackgroundController() {
       </div>
       <div className="py-2">
         <label className="p-2 flex justify-between items-center">
-          Icon Color
+          Background Color
         </label>
         <ColorPickerController
           hideController={true}

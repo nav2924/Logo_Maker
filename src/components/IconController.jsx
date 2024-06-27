@@ -1,13 +1,26 @@
 import { Smile } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import ColorPickerController from "./ColorPickerController";
+import { UpdateStorageContext } from "@/context/UpdateStorageContext";
+import IconList from "./IconList";
 
 function IconController() {
-  const [size, setSize] = useState(280);
-  const [rotate, setRotate] = useState(0);
-  const [color, setColor] = useState("#fff");
+  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
   const storageValue = JSON.parse(localStorage.getItem("value"));
+
+  const [size, setSize] = useState(
+    storageValue?.iconSize !== undefined ? storageValue.iconSize : 200
+  );
+  const [rotate, setRotate] = useState(
+    storageValue?.iconsRotate !== undefined ? storageValue.iconsRotate : 0
+  );
+  const [color, setColor] = useState(
+    storageValue?.iconsColor !== undefined ? storageValue.iconsColor : "#fff"
+  );
+  const [icon, setIcon] = useState(
+    storageValue?.icon !== undefined ? storageValue.icon : "Smile"
+  );
 
   useEffect(() => {
     const updateValue = {
@@ -15,17 +28,15 @@ function IconController() {
       iconSize: size,
       iconsColor: color,
       iconsRotate: rotate,
-      icon: "Smile",
+      icon: icon,
     };
+    setUpdateStorage(updateValue);
     localStorage.setItem("value", JSON.stringify(updateValue));
-  }, [size, color, rotate]);
+  }, [size, color, rotate, icon]);
 
   return (
     <div>
-      <label>Icon</label>
-      <div className="p-3 cursor-pointer bg-primary-text rounded-md w-[50px] h-[50px] flex items-center my-2 justify-center">
-        <Smile />
-      </div>
+      <IconList selectedIcon={(icon) => setIcon(icon)} />
       <div className="py-2">
         <label className="p-2 flex justify-between items-center">
           Size<span>{size} px</span>
@@ -33,7 +44,7 @@ function IconController() {
         <Slider
           step={1}
           max={512}
-          defaultValue={[280]}
+          defaultValue={[size]}
           onValueChange={(event) => setSize(event[0])}
         />
       </div>
@@ -44,7 +55,7 @@ function IconController() {
         <Slider
           step={1}
           max={360}
-          defaultValue={[0]}
+          defaultValue={[rotate]}
           onValueChange={(event) => setRotate(event[0])}
         />
       </div>
