@@ -13,7 +13,7 @@ git clone https://github.com/nav2924/Logo_Maker.git
 <p>2. cd into the directory</p>
 
 ```
-cd Evo_website
+cd Logo_Maker
 ```
 
 <p>3. Install the Dependencies</p>
