@@ -38,6 +38,7 @@ Technologies used in the project:
 *   Vite + react
 
 ![image](https://github.com/nav2924/Logo_Maker/assets/141626335/6035ed50-af1e-488d-a229-3e7fa8b2b013)
+<br>
 ![image](https://github.com/nav2924/Logo_Maker/assets/141626335/c6f39bfc-f506-4418-9a71-30f37faaa969)
 
 
